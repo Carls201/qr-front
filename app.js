@@ -121,7 +121,8 @@ async function scanSingleQRCode () {
 
 // Función para hacer fetch de los datos
 async function fetchQRData(qrData) {
-    fetch(`http://localhost:3000/api/post`, {
+    
+    fetch(`https://qr-back-s3hl.onrender.com/api/post`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
