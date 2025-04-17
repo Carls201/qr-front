@@ -6,6 +6,7 @@ const qrTime = document.getElementById('qrTime');
 const startButton = document.getElementById('startButton');
 const stopButton = document.getElementById('stopButton');
 const scanButton = document.getElementById('scanButton');
+const geoButton = document.getElementById('geoButton');
 
 // Variables de estado
 let stream = null;
@@ -16,6 +17,7 @@ let lastScanResult = null;
 startButton.addEventListener('click', startCamera);
 stopButton.addEventListener('click', stopCamera);
 scanButton.addEventListener('click', scanSingleQRCode);
+geoButton.addEventListener('click', getLocation);
 
 // Función para iniciar la cámara
 async function startCamera() {
@@ -121,13 +123,18 @@ async function scanSingleQRCode () {
 
 // Función para hacer fetch de los datos
 async function fetchQRData(qrData) {
-    
+    //https://qr-back-s3hl.onrender.com/api/post
+    const res = await getGeolocation();
     fetch(`https://qr-back-s3hl.onrender.com/api/post`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ info: qrData })
+        body: JSON.stringify({ 
+            info: qrData,
+            latitude: res.latitude,
+            longitude: res.longitude
+        })
     })
     .then(response => {
         if (!response.ok) {
@@ -144,5 +151,31 @@ async function fetchQRData(qrData) {
         if (qrData.textContent) {
             qrData.textContent = `Error al consultar: ${error.message}`;
         }
+    });
+}
+
+// Función para obtener la geolocalización
+function getGeolocation() {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject("Geolocalización no soportada en este navegador.");
+      } else {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              accuracy: position.coords.accuracy, // Precisión en metros
+            });
+          },
+          (error) => {
+            reject(`Error al obtener geolocalización: ${error.message}`);
+          },
+          {
+            enableHighAccuracy: true, // Mayor precisión (GPS)
+            timeout: 10000, // 10 segundos de espera
+          }
+        );
+      }
     });
 }
