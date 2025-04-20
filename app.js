@@ -125,7 +125,7 @@ async function scanSingleQRCode () {
 async function fetchQRData(qrData) {
     //https://qr-back-s3hl.onrender.com/api/post
     const res = await getGeolocation();
-    fetch(`https://qr-back-s3hl.onrender.com/api/post`, {
+    fetch(`https://code-snap.duckdns.org/api/post`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
