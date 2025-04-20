@@ -1,105 +1,128 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
-    color: #333;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #2c3e50;
-}
-
-.camera-container {
-    position: relative;
-    width: 100%;
-    margin: 20px 0;
-    background-color: #eee;
-    border-radius: 4px;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-}
-
-video, canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-}
-
-.controls {
+    padding: 0;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
 }
-
-.btn {
-    padding: 10px 20px;
+.scanner-container {
+    width: 95%;
+    max-width: 900px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+}
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+.video-container {
+    position: relative;
+    width: 100%;
+    margin: 0 auto 20px;
+    aspect-ratio: 4/3;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.scan-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.scan-area {
+    width: 90%;
+    height: 70%;
+    border: 4px solid rgba(46, 134, 222, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,0.7);
+    position: relative;
+}
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(46, 134, 222, 0.8);
+    animation: scan 3s infinite linear;
+}
+@keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+.controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+button {
+    padding: 12px 24px;
     border: none;
-    border-radius: 4px;
-    background-color: #3498db;
+    border-radius: 6px;
+    background: #2e86de;
     color: white;
-    cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 180px;
 }
-
-.btn:hover {
-    background-color: #2980b9;
+button:hover {
+    background: #1a73e8;
+    transform: translateY(-2px);
 }
-
-.btn:disabled {
-    background-color: #95a5a6;
+button:disabled {
+    background: #95a5a6;
+    transform: none;
     cursor: not-allowed;
 }
-
-.result-container {
-    margin: 20px 0;
+#status {
     padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 4px;
-    border-left: 4px solid #3498db;
+    border-radius: 8px;
+    background: #ecf0f1;
+    font-family: 'Courier New', monospace;
+    min-height: 100px;
+    text-align: left;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 14px;
 }
-
-.result-container h3 {
-    margin-top: 0;
-    color: #2c3e50;
-}
-
-.qr-data {
-    word-break: break-all;
-    background-color: white;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    min-height: 50px;
-}
-
-.qr-time {
-    margin-top: 8px;
-    font-size: 0.9em;
+.instructions {
+    margin: 15px 0;
     color: #7f8c8d;
-    text-align: right;
+    font-size: 14px;
 }
-
-.qr-detected {
-    border-left-color: #2ecc71;
-    animation: pulse 0.5s;
+.success {
+    color: #27ae60;
+    background-color: #e8f5e9 !important;
 }
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+@media (max-width: 600px) {
+    .scan-area {
+        width: 95%;
+        height: 80%;
+    }
+    button {
+        width: 100%;
+    }
 }

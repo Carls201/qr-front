@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lector de QR</title>
+    <title>Escáner PDF417 Mejorado</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Lector de Códigos QR</h1>
+    <div class="scanner-container">
+        <h1>Escáner de Documentos PDF417</h1>
+        <div class="instructions">
+            Coloque el documento dentro del área de escaneo. Asegúrese de que esté bien iluminado y completamente visible.
+        </div>
         
-        <div class="camera-container">
-            <video id="video" autoplay playsinline></video>
-            <canvas id="qrCanvas" style="display: none;"></canvas>
+        <div class="video-container">
+            <video id="scanner-video" playsinline></video>
+            <div class="scan-overlay">
+                <div class="scan-area">
+                    <div class="scan-line"></div>
+                </div>
+            </div>
         </div>
         
         <div class="controls">
-            <button id="startButton" class="btn">Activar Cámara</button>
-            <button id="stopButton" class="btn" disabled>Detener Cámara</button>
-            <button id="scanButton" class="btn" disabled>Escanear QR</button>
+            <button id="scan-btn">Iniciar Escaneo</button>
         </div>
         
-        <div class="result-container">
-            <h3>Último código escaneado:</h3>
-            <div id="qrData" class="qr-data">Esperando escaneo...</div>
-            <div id="qrTime" class="qr-time"></div>
-        </div>
+        <div id="status">Presione "Iniciar Escaneo" para comenzar</div>
     </div>
 
-    <script src="./plugins/jsQR.min.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
+
 </body>
 </html>
